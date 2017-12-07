@@ -77,6 +77,7 @@ public class Pass2Visitor extends SmileBaseVisitor<Integer>
                              :                                    "?";
         
         // Emit a field put instruction.
+//        jFile.println(";starwhale");
         jFile.println("\tputstatic\t" + programName
                            +  "/" + ctx.variable().IDENTIFIER().toString() 
                            + " " + typeIndicator);
@@ -150,6 +151,28 @@ public class Pass2Visitor extends SmileBaseVisitor<Integer>
     		jFile.println("\tldc           \"" + sub + "\"");
     		jFile.println("\tinvokevirtual java/io/PrintStream/print(Ljava/lang/String;)V");
     		return visitChildren(ctx);
+    }
+    
+    public Integer visitExprLiteral(SmileParser.ExprLiteralContext ctx)
+    {
+    		
+    		TypeSpec type = ctx.type;
+            
+        String typeIndicator = (type == Predefined.integerType) ? "I"
+                             : (type == Predefined.realType)    ? "F"
+                             :                                    "?";
+        typeIndicator = "I";
+        jFile.println("; starwhale 2");
+    		jFile.println("\tgetstatic     java/lang/System/out Ljava/io/PrintStream;");
+    		jFile.println("\tdup");
+    		Integer value = visitChildren(ctx);
+    		jFile.println("\tinvokevirtual java/io/PrintStream/print(" + typeIndicator + ")V");
+    		
+    		jFile.println("\tgetstatic     java/lang/System/out Ljava/io/PrintStream;");
+    		jFile.println("\tldc           \" \"");
+    		jFile.println("\tinvokevirtual java/io/PrintStream/print(Ljava/lang/String;)V");
+    		
+    		return value;
     }
     
     

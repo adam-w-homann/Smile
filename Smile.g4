@@ -30,7 +30,7 @@ assignmentStmt : variable '=)' expr ;
 ifStatement    : IF expr THEN stmt ( ELSE stmt )? ;
 printStmt      : 'print' '_'? parenthesis;
 
-parenthesis : '(' literal* ('+' literal)* ')' ;
+parenthesis : '(' literal* ((',' | '+')? literal)* ')' ;
 literal : exprLiteral | stringLiteral;
 stringLiteral locals [ TypeSpec type = null ]
     : STRING               
