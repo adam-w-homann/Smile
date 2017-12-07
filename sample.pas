@@ -2,6 +2,7 @@ PROGRAM sample;
 
 VAR
     i, j, k :) integer ;)
+    x, y, z :) real ;)
 
 
 START
@@ -9,6 +10,7 @@ START
     i =) 25 ;)
     j =) 30 ;)
     k =) i + 17 ;)
+    x =) 23.5 ;)
     
     print("You can use double quotes to print. Or...");)
     print('... you can use single quotes');)
@@ -21,5 +23,7 @@ START
     print("And last of all, you can print a mix of strings and variables and expressions like so:");)
 	print(i, "Hello ", 10 + 2, "Worlds ", j * 10);)
 	print("Either a comma ", "or " + "a plus sign can be used for string concatenation.");)
+	print(x);)
+
 
 STOP.

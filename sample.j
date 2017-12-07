@@ -10,6 +10,12 @@
 .field private static j I
 .field private static k I
 
+; x,y,z:)real
+
+.field private static x F
+.field private static y F
+.field private static z F
+
 .method public <init>()V
 
 	aload_0
@@ -47,6 +53,11 @@
 	ldc	17
 	iadd
 	putstatic	sample/k I
+
+; x=)23.5
+
+	ldc	23.5
+	putstatic	sample/x F
 
 ; print("You can use double quotes to print. Or...")
 
@@ -209,6 +220,20 @@
 	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
 	getstatic     java/lang/System/out Ljava/io/PrintStream;
 	ldc           "a plus sign can be used for string concatenation."
+	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
+	getstatic     java/lang/System/out Ljava/io/PrintStream;
+	ldc           ""
+	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+
+; print(x)
+
+; starwhale 2
+	getstatic     java/lang/System/out Ljava/io/PrintStream;
+	dup
+	getstatic	sample/x F
+	invokevirtual java/io/PrintStream/print(F)V
+	getstatic     java/lang/System/out Ljava/io/PrintStream;
+	ldc           " "
 	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
 	getstatic     java/lang/System/out Ljava/io/PrintStream;
 	ldc           ""

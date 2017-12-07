@@ -156,12 +156,12 @@ public class Pass2Visitor extends SmileBaseVisitor<Integer>
     public Integer visitExprLiteral(SmileParser.ExprLiteralContext ctx)
     {
     		
-    		TypeSpec type = ctx.type;
+    		TypeSpec type = ctx.expr().type;
             
         String typeIndicator = (type == Predefined.integerType) ? "I"
                              : (type == Predefined.realType)    ? "F"
                              :                                    "?";
-        typeIndicator = "I";
+//        typeIndicator = "I";
         jFile.println("; starwhale 2");
     		jFile.println("\tgetstatic     java/lang/System/out Ljava/io/PrintStream;");
     		jFile.println("\tdup");
