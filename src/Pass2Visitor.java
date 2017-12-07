@@ -121,17 +121,34 @@ public class Pass2Visitor extends SmileBaseVisitor<Integer>
     @Override
     public Integer visitPrintStmt(SmileParser.PrintStmtContext ctx)
     {
-	    	jFile.println("\tgetstatic java/lang/System/out Ljava/io/PrintStream;");
-	    	Integer value = visit(ctx.parenthesis());
-	    	return value;
+    		for(int i = 0; i < ctx.parenthesis().literal().size(); i++)
+	    {
+	    		visit(ctx.parenthesis().literal(i));
+	    }
+    		if(ctx.getChild(2) == null) 
+    		{
+        		jFile.println("\tgetstatic     java/lang/System/out Ljava/io/PrintStream;");
+        		jFile.println("\tldc           \"\"");
+        		jFile.println("\tinvokevirtual java/io/PrintStream/println(Ljava/lang/String;)V");
+    		}
+    		
+	    	return 0;
+    }
+    
+    @Override
+    public Integer visitLiteral(SmileParser.LiteralContext ctx)
+    {
+//	    	for(int i = 0, i < ctx.literal())
+    		return visitChildren(ctx);
     }
 
     @Override
     public Integer visitStringLiteral(SmileParser.StringLiteralContext ctx)
     {
+    		jFile.println("\tgetstatic     java/lang/System/out Ljava/io/PrintStream;");
     		String sub = ctx.STRING().getText().substring(1,  ctx.STRING().getText().length() - 1); // take out single or double quotes
-    		jFile.println("  ldc           \"" + sub + "\"");
-    		jFile.println("invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V");
+    		jFile.println("\tldc           \"" + sub + "\"");
+    		jFile.println("\tinvokevirtual java/io/PrintStream/print(Ljava/lang/String;)V");
     		return visitChildren(ctx);
     }
     

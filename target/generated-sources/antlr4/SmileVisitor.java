@@ -116,6 +116,12 @@ public interface SmileVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitParenthesis(SmileParser.ParenthesisContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link SmileParser#literal}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLiteral(SmileParser.LiteralContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link SmileParser#stringLiteral}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

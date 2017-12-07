@@ -28,10 +28,10 @@ stmt : compoundStmt
 stmtList       : stmt ( ';)' stmt )* ;
 assignmentStmt : variable '=)' expr ;
 ifStatement    : IF expr THEN stmt ( ELSE stmt )? ;
-printStmt      : 'print' parenthesis;
+printStmt      : 'print' '_'? parenthesis;
 
-parenthesis : '(' (exprLiteral | stringLiteral)* ')' ;
-
+parenthesis : '(' literal* ('+' literal)* ')' ;
+literal : exprLiteral | stringLiteral;
 stringLiteral locals [ TypeSpec type = null ]
     : STRING               
     ;

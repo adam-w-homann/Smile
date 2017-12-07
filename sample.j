@@ -42,15 +42,30 @@
 
 ; print('Hello Garrick, you da man')
 
-	getstatic java/lang/System/out Ljava/io/PrintStream;
-  ldc           "Hello Garrick, you da man"
-invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+	getstatic     java/lang/System/out Ljava/io/PrintStream;
+	ldc           "Hello Garrick, you da man"
+	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
+	getstatic     java/lang/System/out Ljava/io/PrintStream;
+	ldc           ""
+	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
 
-; print("Hello Nosa")
+; print_("Hello Nosa")
 
-	getstatic java/lang/System/out Ljava/io/PrintStream;
-  ldc           "Hello Nosa"
-invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+	getstatic     java/lang/System/out Ljava/io/PrintStream;
+	ldc           "Hello Nosa"
+	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
+
+; print("hi"+"yo")
+
+	getstatic     java/lang/System/out Ljava/io/PrintStream;
+	ldc           "hi"
+	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
+	getstatic     java/lang/System/out Ljava/io/PrintStream;
+	ldc           "yo"
+	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
+	getstatic     java/lang/System/out Ljava/io/PrintStream;
+	ldc           ""
+	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
 
 	getstatic     sample/_runTimer LRunTimer;
 	invokevirtual RunTimer.printElapsedTime()V

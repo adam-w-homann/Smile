@@ -11,7 +11,8 @@ START
 
 
     print('Hello Garrick, you da man');)
-    print("Hello Nosa");)
+    print_("Hello Nosa");)
+    print("hi" + "yo");)
 
 
 STOP.
