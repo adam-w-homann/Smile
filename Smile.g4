@@ -8,7 +8,7 @@ grammar Smile;  // A tiny subset of Pascal
 program   : header mainBlock '.' ;
 header    : PROGRAM IDENTIFIER ';' ;
 mainBlock : block;
-block     : declarations compoundStmt ;
+block     : declarations funcDeclarations compoundStmt ;
 
 declarations : VAR declList ';)' ;
 declList     : decl ( ';)' decl )* ;
@@ -17,19 +17,23 @@ varList      : varId ( ',' varId )* ;
 varId        : IDENTIFIER ;
 typeId       : IDENTIFIER ;
 
-compoundStmt : START stmtList ';)' STOP ;
+funcDeclarations : FUNC (function)*;
+function : IDENTIFIER'('decl ';)' decl')' '{'stmtList'}';
+
+compoundStmt : START stmtList STOP ;
 
 stmt : compoundStmt
      | assignmentStmt
      | ifStatement
      | printStmt
+     | whileStatement
      ;
      
-stmtList       : stmt ( ';)' stmt )* ;
+stmtList       : stmt ( ';)' stmt )* ';)';
 assignmentStmt : variable '=)' expr ;
 ifStatement    : IF expr THEN stmt ( ELSE stmt )? ;
+whileStatement : WHILE expr DO stmtList 'END';
 printStmt      : 'print' '_'? parenthesis;
-
 parenthesis : '(' literal* ((',' | '+')? literal)* ')' ;
 literal : exprLiteral | stringLiteral;
 stringLiteral locals [ TypeSpec type = null ]
@@ -41,10 +45,12 @@ exprLiteral locals [ TypeSpec type = null ]
 
 variable : IDENTIFIER ;
 
+
+
 expr locals [ TypeSpec type = null ]
     : expr mulDivOp expr   # mulDivExpr
     | expr addSubOp expr   # addSubExpr
-    | expr operator expr      # relOpExpr
+    | expr relOp expr      # relOpExpr
     | number               # unsignedNumberExpr
     | signedNumber         # signedNumberExpr
     | variable             # variableExpr
@@ -53,7 +59,7 @@ expr locals [ TypeSpec type = null ]
      
 mulDivOp : MUL_OP | DIV_OP ;
 addSubOp : ADD_OP | SUB_OP ;
-operator    : EQUALS | nEQUALS | lTHAN | gThan ;
+relOp	 : EQ | NE | LT | GT ;
      
 signedNumber locals [ TypeSpec type = null ] 
     : sign number 
@@ -67,9 +73,12 @@ number locals [ TypeSpec type = null ]
 
 PROGRAM : 'PROGRAM' ;
 VAR     : 'VAR' ;
+FUNC    : 'FUNC' ;
 START   : 'START' ;
-STOP     : 'STOP' ;
+STOP    : 'STOP' ;
 IF      : 'IF' ;
+WHILE   : 'WHILE' ;
+DO      : 'DO'	;
 THEN    : 'THEN' ;
 ELSE    : 'ELSE' ;
 PRINT   : 'PRINT' ;
@@ -85,10 +94,11 @@ DIV_OP :   '/' ;
 ADD_OP :   '+' ;
 SUB_OP :   '-' ;
 
-EQUALS :  '==' ;
-nEQUALS :  '!=' ;
-lTHAN :  '<'  ;
-gThan :  '>'  ;
+
+EQ :  '==' ;
+NE :  '!=' ;
+LT :  '<'  ;
+GT :  '>'  ;
 
 NEWLINE : '\r'? '\n' -> skip  ;
 WS      : [ \t]+ -> skip ; 

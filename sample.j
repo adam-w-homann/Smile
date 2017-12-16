@@ -26,6 +26,16 @@
 .limit stack 1
 .end method
 
+; c,f:)real
+
+.field private static c F
+.field private static f F
+
+; a,b:)real
+
+.field private static a F
+.field private static b F
+
 .method public static main([Ljava/lang/String;)V
 
 	new RunTimer
@@ -37,14 +47,25 @@
 	invokenonvirtual PascalTextIn/<init>()V
 	putstatic        sample/_standardIn LPascalTextIn;
 
-; i=)25
+; f=)9*c/5+32
 
-	ldc	25
+	ldc	9
+	getstatic	sample/c F
+	f???
+	ldc	5
+	????
+	ldc	32
+	????
+	putstatic	sample/f ?
+
+; i=)0
+
+	ldc	0
 	putstatic	sample/i I
 
-; j=)30
+; j=)0
 
-	ldc	30
+	ldc	0
 	putstatic	sample/j I
 
 ; k=)i+17
@@ -59,181 +80,54 @@
 	ldc	23.5
 	putstatic	sample/x F
 
-; print("You can use double quotes to print. Or...")
+; WHILE(i<25)DOi=)i+1;)print("go");)print(i);)END
 
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           "You can use double quotes to print. Or..."
-	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           ""
-	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
-
-; print('... you can use single quotes')
-
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           "... you can use single quotes"
-	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           ""
-	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
-
-; print_("Use 'print_()' to print without newline character. ")
-
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           "Use 'print_()' to print without newline character. "
-	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-
-; print("Use 'print()' to print with newline character")
-
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           "Use 'print()' to print with newline character"
-	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           ""
-	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
-
-; print_("You can do string concatenation like so: ")
-
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           "You can do string concatenation like so: "
-	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-
-; print("This "+"sentence "+"is "+"made "+"from "+"multiple "+"strings.")
-
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           "This "
-	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           "sentence "
-	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           "is "
-	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           "made "
-	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           "from "
-	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           "multiple "
-	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           "strings."
-	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           ""
-	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
-
-; print_("And you can print variables and expressions like so: ")
-
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           "And you can print variables and expressions like so: "
-	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-
-; print(k+j+i+10,k+k)
-
-; starwhale 2
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	dup
-	getstatic	sample/k I
-	getstatic	sample/j I
-	iadd
+L1:
 	getstatic	sample/i I
-	iadd
-	ldc	10
-	iadd
-	invokevirtual java/io/PrintStream/print(I)V
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           " "
-	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-; starwhale 2
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	dup
-	getstatic	sample/k I
-	getstatic	sample/k I
-	iadd
-	invokevirtual java/io/PrintStream/print(I)V
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           " "
-	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           ""
-	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+	ldc	25
+	if_icmplt	L001
+	iconst_0
+	goto	L002
+L001:
+	iconst_1
+L002:
+ifeq	L2
 
-; print("And last of all, you can print a mix of strings and variables and expressions like so:")
+; i=)i+1
+
+	getstatic	sample/i I
+	ldc	1
+	iadd
+	putstatic	sample/i I
+
+; print("go")
 
 	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           "And last of all, you can print a mix of strings and variables and expressions like so:"
+	ldc           "go"
 	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
 	getstatic     java/lang/System/out Ljava/io/PrintStream;
 	ldc           ""
 	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
 
-; print(i,"Hello ",10+2,"Worlds ",j*10)
+; print(i)
 
 ; starwhale 2
 	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	dup
 	getstatic	sample/i I
 	invokevirtual java/io/PrintStream/print(I)V
 	getstatic     java/lang/System/out Ljava/io/PrintStream;
 	ldc           " "
 	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
 	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           "Hello "
-	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-; starwhale 2
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	dup
-	ldc	10
-	ldc	2
-	iadd
-	invokevirtual java/io/PrintStream/print(I)V
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           " "
-	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           "Worlds "
-	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-; starwhale 2
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	dup
-	getstatic	sample/j I
-	ldc	10
-	imul
-	invokevirtual java/io/PrintStream/print(I)V
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           " "
-	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
 	ldc           ""
 	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+goto L1
+L2:
 
-; print("Either a comma ","or "+"a plus sign can be used for string concatenation.")
+; print("hello there")
 
 	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           "Either a comma "
-	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           "or "
-	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           "a plus sign can be used for string concatenation."
-	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           ""
-	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
-
-; print(x)
-
-; starwhale 2
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	dup
-	getstatic	sample/x F
-	invokevirtual java/io/PrintStream/print(F)V
-	getstatic     java/lang/System/out Ljava/io/PrintStream;
-	ldc           " "
+	ldc           "hello there"
 	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
 	getstatic     java/lang/System/out Ljava/io/PrintStream;
 	ldc           ""
